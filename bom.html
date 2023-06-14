@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>JavaScript Window</h2>
+
+<p id="demo"></p>
+<input type="button" value="Back" onclick="goBack()">
+
+<input type="button" value="Forward" onclick="goForward()">
+
+<script>
+//document.getElementById("demo").innerHTML =
+//"Browser inner window width: " + window.innerWidth + "px<br>" +
+//"Browser inner window height: " + window.innerHeight + "px";
+
+//window screen width
+//document.getElementById("demo").innerHTML = 
+//"Screen width is " + screen.width;
+
+//Window Screen Height
+//document.getElementById("demo").innerHTML =
+//"Screen Height: " + screen.height;
+
+//color depth
+//document.getElementById("demo").innerHTML =
+//"Screen Color Depth: " + screen.colorDepth;
+
+//window location href
+//document.getElementById("demo").innerHTML =
+//"Page location is " + window.location.href;
+
+//window location port
+//document.getElementById("demo").innerHTML =
+//"Port number is " + window.location.port;
+
+//go back o a page
+function goBack() {
+    window.history.back()
+  }
+
+  //go forword
+  function goForward() {
+    window.history.forward()
+  }
+</script>
+
+</body>
+</html>
