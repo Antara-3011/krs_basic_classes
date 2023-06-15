@@ -3,6 +3,7 @@ const nameInput = document.querySelector("input[name='name']");
 const emailInput = document.querySelector("input[name='email']");
 const phoneInput = document.querySelector("input[name='phone']");
 const messageInput = document.querySelector("textarea[name='message']");
+const thankyou = document.querySelector(".thank-you");
 
 nameInput.isValid = () => !!nameInput.value;
 emailInput.isValid = () => isValidEmail(emailInput.value);
@@ -47,7 +48,8 @@ form.addEventListener("submit", (e) => {
   shouldValidate = true;
   validateInputs();
   if (isFormValid) {
-    // TODO: DO AJAX REQUEST
+    form.remove();
+    thankyou.classList.remove("hide");
   }
 });
 
