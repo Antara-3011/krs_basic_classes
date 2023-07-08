@@ -1,56 +1,92 @@
-const form = document.querySelector("form[name='contact-form']");
-const nameInput = document.querySelector("input[name='name']");
-const emailInput = document.querySelector("input[name='email']");
-const phoneInput = document.querySelector("input[name='phone']");
-const messageInput = document.querySelector("textarea[name='message']");
-const thankyou = document.querySelector(".thank-you");
+// Defining a function to display error message
+function printError(elemId, hintMsg) {
+  document.getElementById(elemId).innerHTML = hintMsg;
+}
 
-nameInput.isValid = () => !!nameInput.value;
-emailInput.isValid = () => isValidEmail(emailInput.value);
-phoneInput.isValid = () => isValidPhone(phoneInput.value);
-messageInput.isValid = () => !!messageInput.value;
+// Defining a function to validate form
+function validateForm() {
+  // Retrieving the values of form elements
+  var name = document.contactForm.name.value;
+  var email = document.contactForm.email.value;
+  var mobile = document.contactForm.mobile.value;
+  var country = document.contactForm.country.value;
+  var gender = document.contactForm.gender.value;
 
-const inputFields = [nameInput, emailInput, phoneInput, messageInput];
+  // Defining error variables with a default value
+  var nameErr = (emailErr = mobileErr = countryErr = genderErr = true);
 
-const isValidEmail = (email) => {
-  const re =
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-};
-
-const isValidPhone = (phone) => {
-  const re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-  return re.test(String(phone).toLowerCase());
-};
-
-let shouldValidate = false;
-let isFormValid = false;
-
-const validateInputs = () => {
-  console.log("we are here");
-  if (!shouldValidate) return;
-
-  isFormValid = true;
-  inputFields.forEach((input) => {
-    input.classList.remove("invalid");
-    input.nextElementSibling.classList.add("hide");
-
-    if (!input.isValid()) {
-      input.classList.add("invalid");
-      isFormValid = false;
-      input.nextElementSibling.classList.remove("hide");
-    }
-  });
-};
-
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  shouldValidate = true;
-  validateInputs();
-  if (isFormValid) {
-    form.remove();
-    thankyou.classList.remove("hide");
+  // Validate name
+  if (name == "") {
+    printError("nameErr", "Please enter your name");
+  } else {
+    printError("nameErr", "");
+    nameErr = false;
   }
-});
 
-inputFields.forEach((input) => input.addEventListener("input", validateInputs));
+  // Validate email address
+  if (email == "") {
+    printError("emailErr", "Please enter your email address");
+  } else {
+    // email validation
+    var atIndex = email.indexOf("@");
+    var dotIndex = email.lastIndexOf(".");
+    if (atIndex <= 0 || dotIndex <= atIndex || dotIndex === email.length - 1) {
+      printError("emailErr", "Please enter a valid email address");
+      return false;
+    } else {
+      printError("emailErr", "");
+      emailErr = false;
+    }
+  }
+
+  // Validate mobile number
+  if (mobile == "") {
+    printError("mobileErr", "Please enter your mobile number");
+  } else {
+    printError("mobileErr", "");
+    mobileErr = false;
+  }
+
+  // Validate country
+  if (country == "Select") {
+    printError("countryErr", "Please select your country");
+  } else {
+    printError("countryErr", "");
+    countryErr = false;
+  }
+
+  // Validate gender
+  if (gender == "") {
+    printError("genderErr", "Please select your gender");
+  } else {
+    printError("genderErr", "");
+    genderErr = false;
+  }
+
+  // Prevent the form from being submitted if there are any errors
+  if ((nameErr || emailErr || mobileErr || countryErr || genderErr) == true) {
+    return false;
+  } else {
+    // Creating a string from input data for preview
+    var dataPreview =
+      "You've entered the following details: \n" +
+      "Full Name: " +
+      name +
+      "\n" +
+      "Email Address: " +
+      email +
+      "\n" +
+      "Mobile Number: " +
+      mobile +
+      "\n" +
+      "Country: " +
+      country +
+      "\n" +
+      "Gender: " +
+      gender +
+      "\n";
+
+    // Display input data in a dialog box before submitting the form
+    alert(dataPreview);
+  }
+}
